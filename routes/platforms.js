@@ -7,7 +7,7 @@ const { readData,
         readOne,
         createData,
         updateData,
-        deleteData} = require('../controllers/post.controller');
+        deleteData} = require('../controllers/platform.controller');
 
 router.get('/', readData)
       .get('/:id',loginRequired, readOne)
