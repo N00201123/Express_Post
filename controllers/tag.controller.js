@@ -1,4 +1,4 @@
-const Tag = require('../models/platform.model');
+const Tag = require('../models/tag.model');
 
 const readData = (req, res) => {
 

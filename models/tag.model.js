@@ -9,8 +9,15 @@ const tagSchema = new Schema({
         type: String,
         required: [true, 'Description field is required'],
     },
+
+    // post: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Tag'
+    //     }
+    // ]
     
 
 }, { timestamps: true});
 
-module.exports = model('Tag', platformSchema);
+module.exports = model('Tag', tagSchema);

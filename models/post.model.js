@@ -1,10 +1,6 @@
 const {Schema, model } = require('mongoose');
 
 const postSchema = new Schema({
-    platform_id: {
-        type: String,
-        required: [true, 'Title field is required'],
-    },
     title: {
         type: String,
         required: [true, 'Title field is required'],
@@ -22,12 +18,19 @@ const postSchema = new Schema({
         required: [true, 'Date field is required'],
     },
     likes: {
-        type: Integer,
+        type: Number,
         required: [true, 'Likes field is required'],
     },
     image_path: {
         type: String,
     },
+
+    // tag: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Post'
+    //     }
+    // ]
 
 }, { timestamps: true});
 

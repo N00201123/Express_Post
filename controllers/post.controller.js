@@ -51,19 +51,21 @@ const createData = (req, res) => {
     console.log(req.body);
     let inputData = req.body;
 
+    console.log(inputData);
+
     Post.create(inputData)
     .then(data => {
         console.log(`New Post Created`, data);
-        res.status(201).json(data);
+        return res.status(201).json(data);
     })
     .catch(err => {
         if(err.name === 'ValidationError'){
-        res.status(422).json(err);
-    } 
-    else {
-        console.error(err);
-         res.status(500).json(err);   
-    }
+            return res.status(422).json(err);
+        } 
+        else {
+            console.error(err);
+            return res.status(500).json(err);   
+        }
     });
 };
 

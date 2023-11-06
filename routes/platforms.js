@@ -10,7 +10,7 @@ const { readData,
         deleteData} = require('../controllers/platform.controller');
 
 router.get('/', readData)
-      .get('/:id',loginRequired, readOne)
+      .get('/:id', readOne)
       .post('/', loginRequired, createData)
       .put('/:id', loginRequired, updateData)
       .delete('/:id', loginRequired, deleteData);
