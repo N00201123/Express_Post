@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const imageUpload = require('../configs/imageUpload');
+
 const { loginRequired } = require('../controllers/user.controller');
 
 const { readData,
@@ -11,8 +13,8 @@ const { readData,
 
 router.get('/', readData)
       .get('/:id', readOne)
-      .post('/', loginRequired, createData)
-      .put('/:id', loginRequired, updateData)
+      .post('/', loginRequired, imageUpload.single('image'), createData)
+      .put('/:id', loginRequired, imageUpload.single('image'), updateData)
       .delete('/:id', loginRequired, deleteData);
 
 module.exports = router;

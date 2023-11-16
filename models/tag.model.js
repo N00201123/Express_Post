@@ -23,6 +23,4 @@ const tagSchema = new Schema({
 
 }, { timestamps: true});
 
-//const Tag = mongoose.model('Tag', postSchema);
-
 module.exports = model('Tag', tagSchema);

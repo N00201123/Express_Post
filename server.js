@@ -9,6 +9,7 @@ require('./configs/db.js')();
 app.use(express.json());
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/views/'));
+app.use(express.static(__dirname + '/public/')); 
 
 //custom middleware
 app.use((req, res, next) => {

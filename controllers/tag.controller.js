@@ -1,5 +1,59 @@
 const Tag = require('../models/tag.model');
 
+const log = data => console.log(JSON.stringify(data,undefined,2))
+
+(async function() {
+
+  try {
+
+    const conn = await mongoose.connect(uri,options);
+
+    // Clean data
+    await Promise.all(
+      Object.entries(conn.models).map(([k,m]) => m.deleteMany() )
+    );
+
+
+    // Create some instances
+    let [football,car] = ['football','car'].map(
+      name => new Post({ name })
+    );
+
+    let [Andrew,William] = ['Andrew','William'].map(
+      name => new Tag({ name })
+    );
+
+    // Add items to stores
+    [Andrew,William].forEach( tag => {
+      tag.items.push(football);   // add toothpaste to store
+      football.tags.push(tag);  // add store to toothpaste
+    });
+
+    //
+    Andrew.posts.push(car);
+    car.tags.push(Andrew);
+
+    // Save everything
+    await Promise.all(
+      [football,car,Andrew,William].map( m => m.save() )
+    );
+
+    // Show tag
+    let tags = await Tag.find().populate('posts','-tags');
+    log(tags);
+
+    // Show items
+    let posts = await Post.find().populate('tags','-posts');
+    log(posts);
+
+  } catch(e) {
+    console.error(e);
+  } finally {
+    mongoose.disconnect();
+  }
+
+})();
+
 const readData = (req, res) => {
 
     Tag.find({})

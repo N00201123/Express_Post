@@ -40,20 +40,4 @@ const postSchema = new Schema({
 
 }, { timestamps: true});
 
-//const Post = mongoose.model('Post', postSchema);
-
-// const log = data => console.log(JSON.stringify(data,undefined,2))
-
-// (async function() {
-
-//   try {
-
-//     const conn = await mongoose.connect(uri,options);
-
-//     // Clean data
-//     await Promise.all(
-//       Object.entries(conn.models).map(([k,m]) => m.deleteMany() )
-//     );
-
-
 module.exports = model('Post', postSchema);
