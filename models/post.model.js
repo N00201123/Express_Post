@@ -1,10 +1,5 @@
 const {Schema, model } = require('mongoose');
 
-// mongoose.Promise = global.Promise;
-// mongoose.set('debug',true);
-// mongoose.set('useFindAndModify', false);
-// mongoose.set('useCreateIndex', true);
-
 const postSchema = new Schema({
     title: {
         type: String,
@@ -35,6 +30,14 @@ const postSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'Tag'
+        }
+    ],
+
+    platform: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Platform',
+            required: [true, 'Platform field is required']
         }
     ]
 

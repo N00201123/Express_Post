@@ -22,10 +22,10 @@ const log = data => console.log(JSON.stringify(data,undefined,2))
         name => new Tag({ name })
       );
   
-      // Add items to stores
+      // Add posts to tags
       [Andrew,William].forEach( tag => {
-        tag.items.push(football);   // add toothpaste to store
-        football.tags.push(tag);  // add store to toothpaste
+        tag.items.push(football);   // add football to tags
+        football.tags.push(tag);  // add tags to football
       });
   
       //
@@ -71,7 +71,7 @@ const log = data => console.log(JSON.stringify(data,undefined,2))
 
 const readData = (req, res) => {
 
-    Post.find({})
+    Post.find({}).populate('platform')
     .then((data) => {
         console.log(data);
 
