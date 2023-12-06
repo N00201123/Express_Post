@@ -53,8 +53,46 @@ const log = data => console.log(JSON.stringify(data,undefined,2))
   
   })();
 
-  const deleteImage = (filename) => {
-    let path = `public/uploads/${filename}`;
+//   const deleteImage = (filename) => {
+//     let path = `public/uploads/${filename}`;
+
+//     fs.access(path, fs.constants.F_OK, (err) => {
+//         if(err) {
+//             console.log(err);
+//             return;
+//         }
+
+//         fs.unlink(path, (err) => {
+//             if(err) throw err;
+//             console.log(`${filename} was deleted!`);
+//         });
+//     });
+// };
+const deleteImage =  async(filename) => {
+
+    if(process.env.STORAGE_ENGINE === 'S3') {
+        const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+        const s3 = new S3Client({
+            region: process.env.MY_AWS_REGION,
+            credentials: {
+                accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY
+            }
+        });
+
+        try{
+            const data = await s3.send(new DeleteObjectCommand({Bucket: process.env.MY_AWS_BUCKET, Key: filename}));
+            console.log("Sucess. Object deleted.", data)
+        }
+
+        catch(err) {
+            console.error(err);
+        }
+    }
+
+    else {
+        
+        let path = `public/uploads/${filename}`;
 
     fs.access(path, fs.constants.F_OK, (err) => {
         if(err) {
@@ -67,6 +105,10 @@ const log = data => console.log(JSON.stringify(data,undefined,2))
             console.log(`${filename} was deleted!`);
         });
     });
+
+    }
+
+    
 };
 
 const readData = (req, res) => {
@@ -119,7 +161,7 @@ const createData = (req, res) => {
     let postData = req.body;
 
     if(req.file) {
-        postData.image_path = req.file.filename;
+        postData.image_path = process.env.STORAGE_ENGINE === 'S3' ? req.file.key : req.file.filename;;
     }
     //include the following else if image is required
     else {

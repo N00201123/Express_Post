@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
@@ -6,6 +7,7 @@ const port = 3000;
 require('dotenv').config();
 require('./configs/db.js')();
 
+app.use(cors());
 app.use(express.json());
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/views/'));
